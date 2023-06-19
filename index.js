@@ -51,11 +51,16 @@ async function run() {
         })
 
 
-        app.get("/allProducts", async (req, res) => {
-            const result = await productsCollection.estimatedDocumentCount();
-            res.json({ allProducts: result });
-        })
 
+
+        app.post("/addCarts",async (req,res)=>{
+            const body = req.body;
+
+            const result = await cartsCollection.insertOne(body);
+            res.send(result);
+
+        })
+       
 
         app.get("/allProducts", async (req, res) => {
             const result = await productsCollection.estimatedDocumentCount();
@@ -73,7 +78,7 @@ app.post("/shortbyproducts",async (req,res)=>{
 
     if (sortBy === 'price') {
       products = await productsCollection.find().sort({ price: -1 }); // Sort by price ascending
-    } else if (sortBy === 'pricedes') {
+    } else if (sortBy === 'setup mongodb surver') {
       products = await productsCollection.find().sort({ price : 1 }); // Sort by ratings descending
     } else if (sortBy === 'ratings') {
       products = await productsCollection.find().sort({ ratingsCount: -1 }); // Sort by ratings descending
